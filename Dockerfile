@@ -9,7 +9,7 @@ COPY . .
 
 # Diagnóstico: verificar que src/ llegó al container
 RUN echo "=== Contenido de /app ===" && ls -la /app && \
-    echo "=== Contenido de /app/src ===" && ls -la /app/src/ || echo "❌ /app/src NO EXISTE"
+  echo "=== Contenido de /app/src ===" && ls -la /app/src/ || echo "❌ /app/src NO EXISTE"
 
 RUN npm run build
 
@@ -37,5 +37,5 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8080
 
-USER nginx
+USER 1001
 CMD ["nginx", "-g", "daemon off;"]
