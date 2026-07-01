@@ -1,0 +1,17 @@
+# Usa este Dockerfile cuando ya tenés el dist/ generado localmente con npm run build.
+# Es más rápido y evita tener Node dentro del container final.
+FROM nginx:1.27-alpine
+
+USER root
+RUN chown -R nginx:root \
+      /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/html && \
+    chmod -R g+rwX \
+      /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/html && \
+    touch /tmp/nginx.pid && chmod g+w /tmp/nginx.pid
+
+COPY dist/ /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 8080
+USER nginx
+CMD ["nginx", "-g", "daemon off;"]
